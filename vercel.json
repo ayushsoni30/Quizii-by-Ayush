@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/questions",
+      "destination": "https://opentdb.com/api.php?amount=10&type=multiple"
+    }
+  ]
+}
