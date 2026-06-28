@@ -1,8 +1,12 @@
 {
   "rewrites": [
     {
+      "source": "/api/categories",
+      "destination": "https://opentdb.com/api_category.php"
+    },
+    {
       "source": "/api/questions",
-      "destination": "https://opentdb.com/api.php?amount=10&type=multiple"
+      "destination": "https://opentdb.com/api.php"
     }
   ]
 }
