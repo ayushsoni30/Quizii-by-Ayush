@@ -1,13 +1,14 @@
 import axios from 'axios';
 
-const API_BASE = 'https://opentdb.com';
+const API_BASE = import.meta.env.VITE_API_BASE
 
 const delay = (ms) => new Promise(res => setTimeout(res, ms));
 
 export const fetchCategories = async (retries = 3) => {
   try {
     const response = await axios.get(`${API_BASE}/api_category.php`);
-    return response.data.trivia_categories;
+    console.log(response)
+    return response.data.trivia_categories;   //gives category
   } catch (error) {
     if (error.response?.status === 429 && retries > 0) {
       console.warn('Rate limited (429) fetching categories. Retrying in 2 seconds...');
@@ -20,6 +21,7 @@ export const fetchCategories = async (retries = 3) => {
 };
 
 export const fetchQuestions = async (amount = 10, categoryId = null, difficulty = null, retries = 3) => {
+  
   try {
     let url = `${API_BASE}/api.php?amount=${amount}&type=multiple`;
     if (categoryId) url += `&category=${categoryId}`;
@@ -27,12 +29,14 @@ export const fetchQuestions = async (amount = 10, categoryId = null, difficulty 
     
     const response = await axios.get(url);
     
+    
     // OpenTDB returns response_code 5 for rate limits
     if (response.data.response_code !== 0) {
       if (response.data.response_code === 5 && retries > 0) {
         console.warn('Rate limited (code 5) fetching questions. Retrying in 3 seconds...');
         await delay(3000);
         return fetchQuestions(amount, categoryId, difficulty, retries - 1);
+        
       }
       throw new Error('Could not fetch questions for these settings. Try again.');
     }

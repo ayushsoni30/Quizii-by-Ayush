@@ -57,7 +57,7 @@ export const Home = ({ onStart }) => {
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
-            Start Quiz
+           Start Quiz
           </Button>
         </>
       )}
